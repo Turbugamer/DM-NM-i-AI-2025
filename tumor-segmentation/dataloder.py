@@ -3,6 +3,7 @@ from os import listdir
 from scipy import ndimage
 import numpy as np
 import cv2
+import csv
 
 
 class Dataloder:
@@ -51,11 +52,31 @@ class Dataloder:
                 bitstring = binary.flatten().tolist()
 
                 if label is not None:
-                    bitstrings.append([label, bitstring])
+                    pic_value = (f"{label} {bitstring}")
+                    modify = "".join(pic_value)
+                    bitstrings.append(modify)
+                    
                 else:
                     bitstrings.append([filename, bitstring])
 
         return bitstrings
 
+
+    def sendToCSV(self, bitstrings):
+        
+        csvFileName = "HPBitstrings.csv"
+        
+        
+        with open("../tumor-segmentation/data/" + csvFileName, 'w', newline='') as csvfile:
+            
+            csv_writer = csv.writer(csvfile)
+
+            for bits in bitstrings:
+                
+                csv_writer.writerow(bits)
+
+
+        print(f"Data successfully written to {"../tumor-segmentation/data/" + csvFileName}")
+                
                
 
