@@ -85,11 +85,16 @@ class Dataloder:
 
         os.makedirs(out_path, exist_ok=True)
 
-        with open(full_path, 'w') as txtfile:
+        with open(full_path, 'a') as txtfile:
+            
             for entry in bitstrings:
-                label = str(entry)  # 0 eller 1
-                bits = ''.join(str(b) for b in entry)  # Lag streng av 0 og 1
-                line = label + bits  # Evt. label + "," + bits hvis du vil ha med label separat
-                txtfile.write(entry + '\n')
+                strEntry = str(entry)
+                #label = str(entry)  # 0 eller 1
+                #bits = ''.join(str(b) for b in entry)  # Lag streng av 0 og 1
+                #line = label + bits  # Evt. label + "," + bits hvis du vil ha med label separat
+                txtfile.write(strEntry)
+
+            txtfile.write("\n")
+        
 
         print(f"✅ Bitstrings written to {full_path} without commas.")
