@@ -62,25 +62,10 @@ class Dataloder:
 
 
 
-
-    def sendToCSV(self, bitstrings):
-        
-        csvFileName = "HPBitstrings.csv"
-        
-        with open("../tumor-segmentation/data/" + csvFileName, 'w', newline='') as csvfile:
-            
-            csv_writer = csv.writer(csvfile)
-
-            print(type(bitstrings))
-            print(len(bitstrings))
-            
-            csv_writer.writerow(bitstrings)
-            
-        print(f"Data successfully written to {"../tumor-segmentation/data/" + csvFileName}")
                 
                
     def sendToTXT(self, bitstrings, out_path):
-        txt_filename = "HPBitstrings.txt"
+        txt_filename = "HPNegativeBitstrings.txt"
         full_path = os.path.join(out_path, txt_filename)
 
         os.makedirs(out_path, exist_ok=True)
@@ -97,4 +82,4 @@ class Dataloder:
             txtfile.write("\n")
         
 
-        print(f"✅ Bitstrings written to {full_path} without commas.")
+        
