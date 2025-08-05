@@ -37,22 +37,23 @@ class Dataloder:
                 cv2.imwrite(full_output_path, hp)
     
 
-    def convertToBitstrings(self):
-        
+    def convertToBitstrings(self, label=None):
         bitstrings = []
-        
+
         for filename in os.listdir(self.outpath):
-            if filename.endswith(".png") or filename.endswith(".jpg"):
+            if filename.lower().endswith((".png", ".jpg")):
                 fullpath = os.path.join(self.outpath, filename)
                 img = cv2.imread(fullpath, cv2.IMREAD_GRAYSCALE)
                 if img is None:
                     continue
 
-                # Terskel: binært bilde
                 _, binary = cv2.threshold(img, 127, 1, cv2.THRESH_BINARY)
                 bitstring = binary.flatten().tolist()
 
-                bitstrings.append([filename, bitstring])
+                if label is not None:
+                    bitstrings.append([label, bitstring])
+                else:
+                    bitstrings.append([filename, bitstring])
 
         return bitstrings
 
