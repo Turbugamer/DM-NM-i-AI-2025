@@ -21,4 +21,6 @@ print(len(bitStrings))
 print(type(bitStrings))
 
 
-load_obj_imgtoHP.sendToCSV(bitStrings[1][:25])
+txt_path = "../tumor-segmentation/data/"
+#load_obj_imgtoHP.sendToCSV(bitStrings[1])
+load_obj_imgtoHP.sendToTXT(bitStrings[1], txt_path)

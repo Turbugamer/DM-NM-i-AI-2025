@@ -52,9 +52,8 @@ class Dataloder:
                 bitstring = binary.flatten().tolist()
 
                 if label is not None:
-                    pic_value = (f"{label} {bitstring}")
-                    modify = "".join(pic_value)
-                    bitstrings.append(modify)
+                    pic_value =  [label] + bitstring
+                    bitstrings.append(pic_value)
                     
                 else:
                     bitstrings.append([filename, bitstring])
@@ -62,21 +61,35 @@ class Dataloder:
         return bitstrings
 
 
+
+
     def sendToCSV(self, bitstrings):
         
         csvFileName = "HPBitstrings.csv"
-        
         
         with open("../tumor-segmentation/data/" + csvFileName, 'w', newline='') as csvfile:
             
             csv_writer = csv.writer(csvfile)
 
-            for bits in bitstrings:
-                
-                csv_writer.writerow(bits)
-
-
+            print(type(bitstrings))
+            print(len(bitstrings))
+            
+            csv_writer.writerow(bitstrings)
+            
         print(f"Data successfully written to {"../tumor-segmentation/data/" + csvFileName}")
                 
                
+    def sendToTXT(self, bitstrings, out_path):
+        txt_filename = "HPBitstrings.txt"
+        full_path = os.path.join(out_path, txt_filename)
 
+        os.makedirs(out_path, exist_ok=True)
+
+        with open(full_path, 'w') as txtfile:
+            for entry in bitstrings:
+                label = str(entry)  # 0 eller 1
+                bits = ''.join(str(b) for b in entry)  # Lag streng av 0 og 1
+                line = label + bits  # Evt. label + "," + bits hvis du vil ha med label separat
+                txtfile.write(entry + '\n')
+
+        print(f"✅ Bitstrings written to {full_path} without commas.")
