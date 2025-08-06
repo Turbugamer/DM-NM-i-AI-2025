@@ -1,16 +1,3 @@
-import numpy as np
-
-### CALL YOUR CUSTOM MODEL VIA THIS FUNCTION ###
-def predict(img: np.ndarray) -> np.ndarray:
-    threshold = 50
-    segmentation = get_threshold_segmentation(img,threshold)
-    return segmentation
-
-### DUMMY MODEL ###
-#def get_threshold_segmentation(img:np.ndarray, threshold:int) -> np.ndarray:
-    #return (img < threshold).astype(np.uint8)*255
-
-
 import tensorflow as tf
 import numpy as np
 import cv2
@@ -44,6 +31,8 @@ def get_threshold_segmentation(img: np.ndarray, threshold: int) -> np.ndarray:
 
     # Returnér maske basert på prediksjon
     if prediction > 0.5:
-        return np.ones_like(img, dtype=np.uint8) * 255  # "Kreft"
+        white_mask = np.ones_like(img, dtype=np.uint8) * 255
+        return np.stack([white_mask]*3, axis=-1)# "Kreft"
     else:
-        return np.zeros_like(img, dtype=np.uint8)       # "Ikke kreft"
+        black_mask = np.zeros_like(img, dtype=np.uint8)
+        return np.stack([black_mask]*3, axis=-1)
